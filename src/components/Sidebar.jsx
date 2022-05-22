@@ -8,8 +8,11 @@ import { links } from "../data/dummy";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
 
+  const handleCloseSidebar = () => {
+    if (activeMenu && screenSize <= 900) setActiveMenu(false);
+  };
   //const [activeMenu, setActiveMenu] = useState(true);
 
   const activeLink =
@@ -24,7 +27,7 @@ const Sidebar = () => {
           <div className="flex justify-between items-center">
             <Link
               to="/"
-              onClick={() => setActiveMenu(false)}
+              onClick={handleCloseSidebar}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
             >
               <SiShopware />
@@ -51,6 +54,7 @@ const Sidebar = () => {
                   <NavLink
                     key={link.name}
                     to={`/${link.name}`}
+                    onClick={handleCloseSidebar}
                     className={({ isActive }) =>
                       isActive ? activeLink : normalLink
                     }
